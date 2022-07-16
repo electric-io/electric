@@ -98,7 +98,7 @@ import { BaseNode } from "../base.node";
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FunctionNode extends BaseNode {
-	protected readonly hostClass = "elx-function-node";
+	protected override readonly hostClass = "elx-function-node";
 
 	@Input() name = "Function";
 
@@ -113,14 +113,14 @@ export class FunctionNode extends BaseNode {
 		super(graph, vm);
 	}
 
-	inputOffset(idx: number): Point {
+	override inputOffset(idx: number): Point {
 		return {
 			x: 0,
 			y: 4 + idx * 2,
 		};
 	}
 
-	outputOffset(idx: number): Point {
+	override outputOffset(idx: number): Point {
 		return {
 			x: this.element.clientWidth / this.vm.cellSize,
 			y: 4 + idx * 2,

@@ -1,0 +1,11 @@
+@use "elx/layout";
+
+:host {
+	display: block;
+	height: 100%;
+}
+
+.main {
+	@include layout.flex($dir:column);
+	max-height: calc(100% - 36px);
+}

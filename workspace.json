@@ -2,6 +2,7 @@
 	"version": 2,
 	"projects": {
 		"components": "packages/components",
+		"glif": "apps/glif",
 		"ng-utils": "packages/ng-utils",
 		"platform": "packages/platform",
 		"showcase": "demos/showcase",

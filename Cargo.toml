@@ -2,4 +2,5 @@
 members = [
 	"demos/tauri-app/src-tauri",
 	"apps/tidy/src-tauri",
+	"apps/glif/src-tauri",
 ]

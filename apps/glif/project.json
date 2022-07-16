@@ -1,21 +1,22 @@
 {
 	"projectType": "application",
-	"root": "demos/showcase",
-	"sourceRoot": "demos/showcase/src",
-	"prefix": "showcase",
+	"root": "apps/glif",
+	"sourceRoot": "apps/glif/src",
+	"prefix": "g",
 	"targets": {
 		"build": {
 			"executor": "@angular-devkit/build-angular:browser",
 			"outputs": ["{options.outputPath}"],
 			"options": {
-				"outputPath": "dist/demos/showcase",
-				"index": "demos/showcase/src/index.html",
-				"main": "demos/showcase/src/main.ts",
-				"polyfills": "demos/showcase/src/polyfills.ts",
-				"tsConfig": "demos/showcase/tsconfig.app.json",
+				"outputPath": "dist/apps/glif",
+				"index": "apps/glif/src/index.html",
+				"main": "apps/glif/src/main.ts",
+				"polyfills": "apps/glif/src/polyfills.ts",
+				"tsConfig": "apps/glif/tsconfig.app.json",
+				"inlineStyleLanguage": "scss",
 				"assets": [
-					"demos/showcase/src/favicon.ico",
-					"demos/showcase/src/assets",
+					"apps/glif/src/favicon.ico",
+					"apps/glif/src/assets",
 					{
 						"input": "packages/style/src/assets",
 						"glob": "**/*",
@@ -25,7 +26,7 @@
 				"styles": [
 					"packages/style/src/assets/fonts.css",
 					"packages/style/src/globals.scss",
-					"demos/showcase/src/styles.scss"
+					"apps/glif/src/styles.scss"
 				],
 				"stylePreprocessorOptions": {
 					"includePaths": ["node_modules", "packages/style/src"]
@@ -48,8 +49,8 @@
 					],
 					"fileReplacements": [
 						{
-							"replace": "demos/showcase/src/environments/environment.ts",
-							"with": "demos/showcase/src/environments/environment.prod.ts"
+							"replace": "apps/glif/src/environments/environment.ts",
+							"with": "apps/glif/src/environments/environment.prod.ts"
 						}
 					],
 					"outputHashing": "all"
@@ -61,22 +62,6 @@
 					"extractLicenses": false,
 					"sourceMap": true,
 					"namedChunks": true
-				},
-				"electron": {
-					"fileReplacements": [
-						{
-							"replace": "demos/showcase/src/environments/env-platform.ts",
-							"with": "demos/showcase/src/environments/env-platform.electron.ts"
-						}
-					]
-				},
-				"tauri": {
-					"fileReplacements": [
-						{
-							"replace": "demos/showcase/src/environments/env-platform.ts",
-							"with": "demos/showcase/src/environments/env-platform.tauri.ts"
-						}
-					]
 				}
 			},
 			"defaultConfiguration": "production"
@@ -85,24 +70,43 @@
 			"executor": "@angular-devkit/build-angular:dev-server",
 			"configurations": {
 				"production": {
-					"browserTarget": "showcase:build:production"
+					"browserTarget": "glif:build:production"
 				},
 				"development": {
-					"browserTarget": "showcase:build:development"
-				},
-				"electron": {
-					"browserTarget": "showcase:build:electron,development"
-				},
-				"tauri": {
-					"browserTarget": "showcase:build:tauri,development"
+					"browserTarget": "glif:build:development"
 				}
 			},
 			"defaultConfiguration": "development"
 		},
+		"launch": {
+			"executor": "@nrwl/workspace:run-commands",
+			"options": {
+				"command": "tauri dev",
+				"cwd": "apps/glif",
+				"color": true
+			}
+		},
 		"extract-i18n": {
 			"executor": "@angular-devkit/build-angular:extract-i18n",
 			"options": {
-				"browserTarget": "showcase:build"
+				"browserTarget": "glif:build"
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": [
+					"apps/glif/src/**/*.ts",
+					"apps/glif/src/**/*.html"
+				]
+			}
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/apps/glif"],
+			"options": {
+				"jestConfig": "apps/glif/jest.config.js",
+				"passWithNoTests": true
 			}
 		}
 	},

@@ -35,10 +35,10 @@ import { BaseNode } from "../base.node";
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConnectorNode extends BaseNode implements OnInit {
-	protected readonly hostClass = "elx-connector-node";
+	protected override readonly hostClass = "elx-connector-node";
 
-	protected xAlign: NodeAlignment = "center";
-	protected yAlign: NodeAlignment = "center";
+	protected override xAlign: NodeAlignment = "center";
+	protected override yAlign: NodeAlignment = "center";
 
 	@Input() type!: string;
 	@Output() dropped = new EventEmitter<void>();
@@ -55,7 +55,7 @@ export class ConnectorNode extends BaseNode implements OnInit {
 		super(graph, vm);
 	}
 
-	ngOnInit(): void {
+	override ngOnInit(): void {
 		super.ngOnInit();
 
 		animationFrames().pipe(

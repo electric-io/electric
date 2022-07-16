@@ -27,10 +27,7 @@
 				"jestConfig": "packages/components/jest.config.js",
 				"passWithNoTests": true,
 				"stylePreprocessorOptions": {
-					"includePaths": [
-						"node_modules",
-						"packages/style/src"
-					]
+					"includePaths": ["node_modules", "packages/style/src"]
 				}
 			}
 		},

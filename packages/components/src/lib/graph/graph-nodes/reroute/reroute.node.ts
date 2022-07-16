@@ -37,15 +37,15 @@ import { BaseNode } from "../base.node";
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RerouteNode extends BaseNode {
-	protected readonly hostClass = "elx-reroute-node";
+	protected override readonly hostClass = "elx-reroute-node";
 
-	protected xAlign: NodeAlignment = "center";
-	protected yAlign: NodeAlignment = "center";
+	protected override xAlign: NodeAlignment = "center";
+	protected override yAlign: NodeAlignment = "center";
 
 	@Input() type!: string;
 
-	@Input() inputs: Port[] = [{ type: PortType.Main }];
-	@Input() outputs: Port[] = [{ type: PortType.Main }];
+	@Input() override inputs: Port[] = [{ type: PortType.Main }];
+	@Input() override outputs: Port[] = [{ type: PortType.Main }];
 
 	get color() { return this._color ??= this._library.typeColor(this.type); }
 	private _color?: string;
