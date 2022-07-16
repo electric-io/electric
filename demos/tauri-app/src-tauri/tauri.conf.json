@@ -1,4 +1,5 @@
 {
+	"$schema": "../../../node_modules/@tauri-apps/cli/schema.json",
 	"package": {
 		"productName": "tauri-demo",
 		"version": "0.1.0"
@@ -28,13 +29,11 @@
 			"shortDescription": "",
 			"longDescription": "",
 			"deb": {
-				"depends": [],
-				"useBootstrapper": false
+				"depends": []
 			},
 			"macOS": {
 				"frameworks": [],
 				"minimumSystemVersion": "",
-				"useBootstrapper": false,
 				"exceptionDomain": "",
 				"signingIdentity": null,
 				"entitlements": null
