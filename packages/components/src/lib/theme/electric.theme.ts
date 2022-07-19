@@ -13,7 +13,7 @@ const DARK_COLORS: ThemeColorPalettes = {
 		900: "#4A4A4A",
 	},
 	foreground: {
-		50: "#F0F0F0",
+		 50: "#F0F0F0",
 		100: "#CDCDCD",
 		200: "#AAAAAA",
 		300: "#898989",
@@ -21,7 +21,7 @@ const DARK_COLORS: ThemeColorPalettes = {
 		500: "#545454",
 	},
 	primary: {
-		50: "#331B59",
+		 50: "#331B59",
 		100: "#3A1E66",
 		200: "#45207D",
 		300: "#5523A1",
@@ -33,7 +33,7 @@ const DARK_COLORS: ThemeColorPalettes = {
 		900: "#E0CFFF",
 	},
 	accent: {
-		50: "#113336",
+		 50: "#113336",
 		100: "#143a3e",
 		200: "#10484B",
 		300: "#16656A",
@@ -45,7 +45,7 @@ const DARK_COLORS: ThemeColorPalettes = {
 		900: "#B2FAFF",
 	},
 	warning: {
-		50: "#710B05",
+		 50: "#710B05",
 		100: "#940F00",
 		200: "#AF1700",
 		300: "#D42E0C",
@@ -78,7 +78,7 @@ const LIGHT_COLORS: ThemeColorPalettes = {
 		900: "#E0E0E0",
 	},
 	foreground: {
-		50: "#000000",
+		 50: "#000000",
 		100: "#3C3C3C",
 		200: "#5F5F5F",
 		300: "#878787",
@@ -86,7 +86,7 @@ const LIGHT_COLORS: ThemeColorPalettes = {
 		500: "#BBBBBB",
 	},
 	primary: {
-		50: "#F5EAFF",
+		 50: "#F5EAFF",
 		100: "#E7D0FF",
 		200: "#D8B2FF",
 		300: "#BD95FF",
@@ -98,7 +98,7 @@ const LIGHT_COLORS: ThemeColorPalettes = {
 		900: "#37224B",
 	},
 	accent: {
-		50: "#DDFDFF",
+		 50: "#DDFDFF",
 		100: "#B6FBFF",
 		200: "#72F7FF",
 		300: "#00E3F1",
@@ -110,7 +110,7 @@ const LIGHT_COLORS: ThemeColorPalettes = {
 		900: "#063A3E",
 	},
 	warning: {
-		50: "#FFF5C2",
+		 50: "#FFF5C2",
 		100: "#FFEBA0",
 		200: "#FFDC73",
 		300: "#FFC744",

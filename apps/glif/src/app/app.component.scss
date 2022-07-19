@@ -1,11 +1,26 @@
+@use "elx/a11y" as *;
 @use "elx/layout";
+@use "elx/style/color";
+@use "elx/style/type";
 
 :host {
 	display: block;
 	height: 100%;
 }
 
+.title {
+	@include layout.inline-flex($a:center, $j:center);
+	@include type.h3;
+	flex: 1 0 0;
+	gap: rem(4);
+	pointer-events: none;
+
+	&__app     { color: color.foreground(50) }
+	&__sep     { color: color.foreground(500) }
+	&__project { color: color.foreground(300) }
+}
+
 .main {
-	@include layout.flex($dir:column);
+	@include layout.flex($dir:column, $a:center, $j:center);
 	max-height: calc(100% - 36px);
 }

@@ -18,39 +18,17 @@
 		"baseUrl": ".",
 		"paths": {
 			"@electric/components": ["packages/components/src/index.ts"],
-			"@electric/components/accordion": [
-				"packages/components/src/lib/accordion/index.ts"
-			],
-			"@electric/components/app-shell": [
-				"packages/components/src/lib/app-shell/index.ts"
-			],
-			"@electric/components/button": [
-				"packages/components/src/lib/button/index.ts"
-			],
-			"@electric/components/dialog": [
-				"packages/components/src/lib/dialog/index.ts"
-			],
-			"@electric/components/form-controls": [
-				"packages/components/src/lib/form-controls/index.ts"
-			],
-			"@electric/components/graph": [
-				"packages/components/src/lib/graph/index.ts"
-			],
-			"@electric/components/icon": [
-				"packages/components/src/lib/icon/index.ts"
-			],
-			"@electric/components/menu": [
-				"packages/components/src/lib/menu/index.ts"
-			],
-			"@electric/components/resize-handle": [
-				"packages/components/src/lib/resize-handle/index.ts"
-			],
-			"@electric/components/tabs": [
-				"packages/components/src/lib/tabs/index.ts"
-			],
-			"@electric/components/theme": [
-				"packages/components/src/lib/theme/index.ts"
-			],
+			"@electric/components/accordion": ["packages/components/src/lib/accordion/index.ts"],
+			"@electric/components/app-shell": ["packages/components/src/lib/app-shell/index.ts"],
+			"@electric/components/button": ["packages/components/src/lib/button/index.ts"],
+			"@electric/components/dialog": ["packages/components/src/lib/dialog/index.ts"],
+			"@electric/components/form-controls": ["packages/components/src/lib/form-controls/index.ts"],
+			"@electric/components/graph": ["packages/components/src/lib/graph/index.ts"],
+			"@electric/components/icon": ["packages/components/src/lib/icon/index.ts"],
+			"@electric/components/menu": ["packages/components/src/lib/menu/index.ts"],
+			"@electric/components/resize-handle": ["packages/components/src/lib/resize-handle/index.ts"],
+			"@electric/components/tabs": ["packages/components/src/lib/tabs/index.ts"],
+			"@electric/components/theme": ["packages/components/src/lib/theme/index.ts"],
 			"@electric/ng-utils": ["packages/ng-utils/src/index.ts"],
 			"@electric/platform": ["packages/platform/src/index.ts"],
 			"@electric/style": ["packages/style/src/index.ts"],

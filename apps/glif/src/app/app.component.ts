@@ -1,5 +1,10 @@
 import { Component, Inject } from "@angular/core";
 import { WindowProvider, WINDOW_PROVIDER } from "@electric/platform";
+import * as dialog from "@tauri-apps/api/dialog";
+import { firstValueFrom } from "rxjs";
+
+import { ProjectService } from "./project.service";
+import tauri from "./tauri.bridge";
 
 @Component({
 	selector: "g-root",
@@ -10,7 +15,6 @@ import { WindowProvider, WINDOW_PROVIDER } from "@electric/platform";
 	[maximized]="maximized"
 >
 	<elx-titlebar
-		title="Glif"
 		(minimize)="minimize()"
 		[(maximized)]="maximized"
 		(close)="close()"
@@ -19,9 +23,57 @@ import { WindowProvider, WINDOW_PROVIDER } from "@electric/platform";
 			src="assets/favicon.ico"
 			alt="Glif Favicon"
 		/>
+
+		<elx-menubar>
+			<elx-menuitem [elxMenuTriggerFor]="fileMenu">
+				File
+			</elx-menuitem>
+			<elx-menuitem disabled>
+				Edit
+			</elx-menuitem>
+			<elx-menuitem disabled>
+				Help
+			</elx-menuitem>
+		</elx-menubar>
+
+		<div class="title" elxTitlebarTitle>
+			<span class="title__app">Glif</span>
+			<ng-container *ngIf="(_project.name$ | async) as projectName">
+				<em class="title__sep">/</em>
+				<span class="title__project">{{ projectName }}</span>
+			</ng-container>
+		</div>
 	</elx-titlebar>
 
+	<elx-menu #fileMenu>
+		<elx-menuitem icon="NewFolder" keybind="Ctrl + N"
+			(click)="_project.create()"
+		>
+			New Project...
+		</elx-menuitem>
+		<elx-menuitem icon="FolderOpen" keybind="Ctrl + O"
+			(click)="_project.open()"
+		>
+			Open Project...
+		</elx-menuitem>
+		<elx-menuitem disabled>
+			Recent Projects
+		</elx-menuitem> <!-- TODO -->
+		<hr />
+		<elx-menuitem (click)="importFont()"
+			[disabled]="!(_project.home$ | async)"
+		>
+			Import Font...
+		</elx-menuitem>
+	</elx-menu>
+
 	<elx-main-viewport class="main">
+
+		<button elx-btn="primary"
+			(click)="importFont()"
+		>
+			Get Started
+		</button>
 
 	</elx-main-viewport>
 </elx-app-shell>
@@ -35,6 +87,7 @@ export class AppComponent {
 
 	constructor (
 		@Inject(WINDOW_PROVIDER) private _win: WindowProvider,
+		public _project: ProjectService,
 	) {}
 
 	async minimize() {
@@ -43,5 +96,39 @@ export class AppComponent {
 
 	async close() {
 		await this._win.close();
+	}
+
+	async importFont() {
+		try {
+			const result = await dialog.open({
+				title: "Import Font(s)",
+				directory: false,
+				multiple: true,
+				filters: [{
+					name: "Font Files",
+					extensions: ["otf", "ttf"],
+				}],
+			});
+
+			if (!result) return;
+
+			const projectPath = await firstValueFrom(this._project.home$);
+			if (Array.isArray(result)) {
+				await Promise.all(
+					result.map(fontPath => tauri.loadFont({
+						fontPath,
+						projectPath,
+					})),
+				);
+			} else {
+				await tauri.loadFont({
+					fontPath: result,
+					projectPath,
+				});
+			}
+		}
+		catch (err) {
+			console.error(err);
+		}
 	}
 }

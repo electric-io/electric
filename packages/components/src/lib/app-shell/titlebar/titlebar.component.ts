@@ -29,10 +29,14 @@ import { APP_PLATFORM, AppPlatform } from "@electric/platform";
 <ng-content select="elx-menubar"></ng-content>
 
 <div class="elx-titlebar__title"
-	*ngIf="title != null"
+	*ngIf="title != null;
+	else projectedTitle"
 >
 	{{ title }}
 </div>
+<ng-template #projectedTitle>
+	<ng-content select="[elxTitlebarTitle]"></ng-content>
+</ng-template>
 
 <ng-content></ng-content>
 
