@@ -6,6 +6,7 @@ import {
 	WindowProvider,
 	WINDOW_PROVIDER,
 } from "@electric/platform";
+import { match } from "@electric/utils";
 
 @Component({
 	selector: "showcase-root",
@@ -20,11 +21,11 @@ export class AppComponent {
 		let base = "Electric Showcase";
 		let middleDot = "\xB7";
 
-		switch (this.platform) {
-			case AppPlatform.Web: return base;
-			case AppPlatform.Electron: return `${base} ${middleDot} Electron`;
-			case AppPlatform.Tauri: return `${base} ${middleDot} Tauri`;
-		}
+		return match(this.platform, {
+			[AppPlatform.Web]: () => base,
+			[AppPlatform.Electron]: () => `${base} ${middleDot} Electron`,
+			[AppPlatform.Tauri]: () => `${base} ${middleDot} Tauri`,
+		});
 	}
 
 	constructor (

@@ -6,7 +6,7 @@ import * as prettierNg from "prettier/parser-angular";
 import * as prettierTs from "prettier/parser-typescript";
 import * as prettierScss from "prettier/parser-postcss";
 
-import { isNotNull } from "@electric/utils";
+import { exists, match } from "@electric/utils";
 
 import { Defaults } from "../examples.types";
 import { HTML_IDENT } from "./languages/common";
@@ -76,7 +76,7 @@ export class StripDefaultsPipe implements PipeTransform {
 
 				return line;
 			})
-			.filter(isNotNull);
+			.filter(exists);
 	}
 }
 
@@ -90,8 +90,8 @@ export class FormatCodePipe implements PipeTransform {
 	}
 
 	private optionsFor(language: string) {
-		switch (language) {
-			case "html": return {
+		return match(language, {
+			html: () => ({
 				parser: "angular",
 				useTabs: true,
 				printWidth: 50,
@@ -99,24 +99,25 @@ export class FormatCodePipe implements PipeTransform {
 					prettierHtml,
 					prettierNg,
 				],
-			}
-			case "scss": return {
+			}),
+			scss: () => ({
 				parser: "scss",
 				useTabs: true,
 				plugins: [
 					prettierScss,
 				],
-			}
-			case "typescript": return {
+			}),
+			typescript: () => ({
 				parser: "typescript",
 				useTabs: true,
 				plugins: [
 					prettierTs,
 				],
-			}
-			default:
+			}),
+			_: () => {
 				throw new Error();
-		}
+			},
+		});
 	}
 }
 

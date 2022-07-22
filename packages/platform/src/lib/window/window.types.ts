@@ -1,4 +1,5 @@
 import { InjectionToken } from "@angular/core";
+import { match } from "@electric/utils";
 import { Observable } from "rxjs";
 
 import { AppPlatform } from "../platform.types";
@@ -18,9 +19,9 @@ export interface WindowProvider {
 export const WINDOW_PROVIDER = new InjectionToken<WindowProvider>("WindowProvider");
 
 export function WindowProviderFactory(platform: AppPlatform): WindowProvider {
-	switch (platform) {
-		case AppPlatform.Electron: return new ElectronWindowService();
-		case AppPlatform.Tauri: return new TauriWindowService();
-		case AppPlatform.Web: return new NoopWindowService();
-	}
+	return match(platform, {
+		[AppPlatform.Electron]: () => new ElectronWindowService(),
+		[AppPlatform.Tauri]: () => new TauriWindowService(),
+		[AppPlatform.Web]: () => new NoopWindowService(),
+	});
 }

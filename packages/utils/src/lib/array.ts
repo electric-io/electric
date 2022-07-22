@@ -88,15 +88,3 @@ export function replaceAt<T>(index: number, newItem: T) {
 export function removeAt<T>(index: number) {
 	return (array: T[]) => array.filter((_, i) => i !== index);
 }
-
-type Falsy = "" | null | undefined | false | 0;
-type Truthy<T> = Exclude<T, Falsy>;
-export function isTruthy<T>(it: T): it is Truthy<T> {
-	return Boolean(it);
-}
-
-type Nullish = null | undefined | void;
-type NonNull<T> = Exclude<T, Nullish>;
-export function isNotNull<T>(it: T): it is NonNull<T> {
-	return it != null;
-}

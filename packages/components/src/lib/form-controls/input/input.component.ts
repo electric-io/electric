@@ -10,7 +10,7 @@ import {
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 
 import { Coerce } from "@electric/ng-utils";
-import { Fn } from "@electric/utils";
+import { Fn, match } from "@electric/utils";
 
 import {
 	NativeControl,
@@ -77,21 +77,14 @@ implements NativeControl, ValueAccessor<T> {
 
 	@HostListener("input")
 	_onInput(): void {
-		let value = this._element.value;
-		switch (this.type) {
-			case "number": {
-				this.onChange(parseFloat(value) as T);
-				break;
-			}
-			case "tel": {
-				this.onChange(parseInt(value, 10) as T);
-				break;
-			}
-			default: {
-				this.onChange(value as T);
-				break;
-			}
-		}
+		let element = this._element;
+		let value = match(this.type, {
+			number: () => parseFloat(element.value),
+			tel: () => parseInt(element.value, 10),
+			_: () => element.value,
+		});
+
+		this.onChange(value as T);
 	}
 
 	writeValue(value?: T): void {

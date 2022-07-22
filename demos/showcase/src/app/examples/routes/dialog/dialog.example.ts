@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 
 import { Loop } from "@electric/ng-utils";
-import { Fn } from "@electric/utils";
+import { Fn, match } from "@electric/utils";
 import { Defaults } from "../../examples.types";
 
 @Component({
@@ -180,22 +180,22 @@ export class DialogExample {
 	}
 
 	openDialog(): void {
-		switch (this.inputs.role) {
-			case "dialog": {
+		match(this.inputs.role, {
+			dialog: () => {
 				if (this.inputs.loader) {
 					if (!this.inputs.indeterminate)
 						this.startTimer();
+
 					this.showLoader = true;
-				} else {
+				}
+				else {
 					this.showDialog = true;
 				}
-				break;
-			}
-			case "alert": {
+			},
+			alert: () => {
 				this.showAlert = true;
-				break;
-			}
-		}
+			},
+		});
 	}
 
 	stopTimer = () => {

@@ -9,7 +9,7 @@ import {
 } from "@angular/core";
 
 import { a11y } from "@electric/style";
-import { camelToKebabCase } from "@electric/utils";
+import { camelToKebabCase, match } from "@electric/utils";
 
 import { IconRegistry } from "./icon.service";
 import { IconName, IconSize } from "./icon.types";
@@ -46,12 +46,12 @@ export class IconComponent {
 
 	@HostBinding("style.fontSize")
 	get fontSize() {
-		switch (this.size) {
-			case "xs": return a11y.rem(16);
-			case "sm": return a11y.rem(18);
-			case "md": return a11y.rem(20);
-			case "lg": return a11y.rem(24);
-		}
+		return match(this.size, {
+			xs: () => a11y.rem(16),
+			sm: () => a11y.rem(18),
+			md: () => a11y.rem(20),
+			lg: () => a11y.rem(24),
+		});
 	}
 
 	private get _element() {

@@ -13,7 +13,7 @@ import {
 import { Subject } from "rxjs";
 
 import { Coerce } from "@electric/ng-utils";
-import { elementId } from "@electric/utils";
+import { elementId, match } from "@electric/utils";
 
 import {
 	GRAPH_VIEW_MODEL,
@@ -53,20 +53,20 @@ implements OnInit, OnDestroy, GraphNode {
 			translateY(${this._translateY})`;
 	}
 	private get _translateX() {
-		switch (this.xAlign) {
-			case "left":   return "0";
-			case "center": return "-50%";
-			case "right":  return "-100%";
-			default: return "0";
-		}
+		return match(this.xAlign, {
+			left:   () => "0",
+			center: () => "-50%",
+			right:  () => "-100%",
+			_:      () => "0",
+		});
 	}
 	private get _translateY() {
-		switch (this.yAlign) {
-			case "top":    return "0";
-			case "center": return "-50%";
-			case "bottom": return "-100%";
-			default: return "0";
-		}
+		return match(this.yAlign, {
+			top:    () => "0",
+			center: () => "-50%",
+			bottom: () => "-100%",
+			_:      () => "0",
+		});
 	}
 
 	@Input() id = elementId("graph-node");

@@ -11,6 +11,7 @@ import {
 	PipeTransform,
 } from "@angular/core";
 import { IconName } from "@electric/components/icon";
+import { match } from "@electric/utils";
 import { Entry } from "@tidy-api";
 import { Subject, takeUntil } from "rxjs";
 
@@ -24,10 +25,10 @@ type Column = keyof Entry;
 export class SortIconPipe implements PipeTransform {
 	transform(active: boolean, direction: Sort): IconName {
 		if (!active) return "Sort";
-		switch (direction) {
-			case Sort.Asc: return "SortUp";
-			case Sort.Desc: return "SortDown";
-		}
+		return match(direction, {
+			[Sort.Asc]: () => "SortUp" as const,
+			[Sort.Desc]: () => "SortDown" as const,
+		});
 	}
 }
 
@@ -85,14 +86,10 @@ implements OnInit, OnDestroy {
 	@HostListener("click")
 	toggleSort() {
 		if (this.isActive) {
-			switch (this.direction) {
-				case Sort.Asc:
-					this._dataSrc.sortDirection = Sort.Desc;
-					break;
-				case Sort.Desc:
-					this._dataSrc.sortDirection = Sort.Asc;
-					break;
-			}
+			this._dataSrc.sortDirection = match(this.direction, {
+				[Sort.Asc]: () => Sort.Desc,
+				[Sort.Desc]: () => Sort.Asc,
+			});
 		} else {
 			this._dataSrc.sortBy = this._column.name as Column;
 			this._dataSrc.sortDirection = Sort.Asc;

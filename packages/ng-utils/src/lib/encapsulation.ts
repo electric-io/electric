@@ -1,5 +1,6 @@
 import { coerceElement } from "@angular/cdk/coercion";
 import { ElementRef } from "@angular/core";
+import { match } from "@electric/utils";
 
 export enum EncapsulationKind {
 	Content = "_ngcontent-",
@@ -21,12 +22,10 @@ export function findEncapsulationId(
 }
 
 function impl(attributes: NamedNodeMap, prefix: EncapsulationKind) {
-	let pattern = (() => {
-		switch (prefix) {
-			case EncapsulationKind.Content: return CONTENT_PATTERN;
-			case EncapsulationKind.Host: return HOST_PATTERN;
-		}
-	})();
+	let pattern = match(prefix, {
+		[EncapsulationKind.Content]: () => CONTENT_PATTERN,
+		[EncapsulationKind.Host]: () => HOST_PATTERN,
+	});
 
 	for (let i = 0; i < attributes.length; ++i) {
 		let attr = attributes[i];

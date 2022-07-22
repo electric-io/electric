@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { match } from "@electric/utils";
 import type { CursorOptions, CursorResult, Options, Plugin } from "prettier";
 
 interface Prettier {
@@ -22,26 +23,23 @@ export class CodeFormatService {
 		let prettier: Prettier = await this._prettier;
 
 		if (!this._loadedPlugins.has(options.parser as string)) {
-			switch (options.parser) {
-				case "angular": {
+			await match(options.parser as string, {
+				angular: async () => {
 					let plugins = await Promise.all([
 						import("prettier/parser-angular"),
 						import("prettier/parser-html"),
 					]);
 					this._loadedPlugins.set("angular", plugins);
-					break;
-				}
-				case "scss": {
+				},
+				scss: async () => {
 					let plugins = [await import("prettier/parser-postcss")];
 					this._loadedPlugins.set("scss", plugins);
-					break;
-				}
-				case "typescript": {
+				},
+				typescript: async () => {
 					let plugins = [await import("prettier/parser-typescript")];
 					this._loadedPlugins.set("typescript", plugins);
-					break;
-				}
-			}
+				},
+			});
 		}
 
 		options.plugins = this._loadedPlugins.get(options.parser as string);

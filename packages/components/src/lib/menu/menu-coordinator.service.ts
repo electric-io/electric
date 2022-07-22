@@ -23,8 +23,9 @@ import {
 	elementId,
 	ElementId,
 	entries,
+	exists,
 	fromKeydown,
-	isNotNull,
+	match,
 } from "@electric/utils";
 
 import { MenuOverlayManager } from "./menu-overlay.service";
@@ -84,19 +85,12 @@ export class MenuCoordinator {
 
 		// Instantiate the appropriate menu controller for this menu
 		// and add it to the map
-		let menu = (() => {
-			switch (kind) {
-				case MenuKind.Menu: {
-					return new MenuController(id, trigger, overlay);
-				}
-				case MenuKind.Context: {
-					return new ContextMenuController(id, trigger, overlay);
-				}
-				case MenuKind.Submenu: {
-					return new SubmenuController(id, trigger, overlay);
-				}
-			}
-		})();
+		let menu = match(kind, {
+			[MenuKind.Menu]:    () => new MenuController(id, trigger, overlay),
+			[MenuKind.Context]: () => new ContextMenuController(id, trigger, overlay),
+			[MenuKind.Submenu]: () => new SubmenuController(id, trigger, overlay),
+		});
+
 		this._menus.set(id, menu);
 
 		if (parent) {
@@ -420,7 +414,7 @@ class SubmenuController extends AbstractMenuController {
 					return event;
 				}
 			})()),
-			filter(isNotNull),
+			filter(exists),
 			// Submenu should open on hover after a brief delay
 			switchMap(event => timer(250).pipe(
 				map(() => event),

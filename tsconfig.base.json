@@ -9,7 +9,7 @@
 		"experimentalDecorators": true,
 		"importHelpers": true,
 		"allowSyntheticDefaultImports": true,
-		"target": "es2015",
+		"target": "es2020",
 		"module": "esnext",
 		"lib": ["es2020", "dom"],
 		"skipLibCheck": true,
