@@ -1,10 +1,9 @@
 import { Component, Inject } from "@angular/core";
 import { WindowProvider, WINDOW_PROVIDER } from "@electric/platform";
 import * as dialog from "@tauri-apps/api/dialog";
-import { firstValueFrom } from "rxjs";
 
+import { Font } from "./font";
 import { ProjectService } from "./project.service";
-import tauri from "./tauri.bridge";
 
 @Component({
 	selector: "g-root",
@@ -60,9 +59,8 @@ import tauri from "./tauri.bridge";
 			Recent Projects
 		</elx-menuitem> <!-- TODO -->
 		<hr />
-		<elx-menuitem (click)="importFont()"
-			[disabled]="!(_project.home$ | async)"
-		>
+		<!-- [disabled]="!(_project.home$ | async)" -->
+		<elx-menuitem (click)="importFont()">
 			Import Font...
 		</elx-menuitem>
 	</elx-menu>
@@ -112,19 +110,14 @@ export class AppComponent {
 
 			if (!result) return;
 
-			const projectPath = await firstValueFrom(this._project.home$);
 			if (Array.isArray(result)) {
-				await Promise.all(
-					result.map(fontPath => tauri.loadFont({
-						fontPath,
-						projectPath,
-					})),
-				);
-			} else {
-				await tauri.loadFont({
-					fontPath: result,
-					projectPath,
-				});
+				const fonts = await Promise.all(result.map(Font.fromFile));
+				for (let font of fonts)
+					console.log(font);
+			}
+			else {
+				const font = await Font.fromFile(result);
+				console.log(font);
 			}
 		}
 		catch (err) {
